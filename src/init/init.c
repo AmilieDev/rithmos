@@ -17,11 +17,14 @@ int init(void){
 
 	result = ma_engine_init(NULL, &engine);
         if(result != MA_SUCCESS){
+		log_panic("Failed to initialise engine! Literally cannot continue!!!");
                 return -1;
         }
 
+	log_warning("Potential issue: If assets/sound.wav does not exist, the application will not play audio. Please ensure it exists.\nBeing replaced with an audio selector via key input soon anyway. Hopefully will make this GUI one day. Just keep notes.");
         ma_engine_play_sound(&engine, "assets/sound.wav", NULL);
-        log_info("[Info] Press enter to exit.\n");
+	log_info("Sound played! You should have heard a beep!");
+        log_info("Press enter to exit.\n");
         getchar();
 
 	// Temporarily terminate the engine here.
