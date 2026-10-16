@@ -4,7 +4,7 @@ SRC_DIR = ./src
 INC_DIR = $(SRC_DIR)/miniaudio
 OUT_DIR = ./output
 
-CFLAGS = -Wall -Wextra -I$(INC_DIR)
+CFLAGS = -std=c11 -Wall -Wextra -I$(INC_DIR)
 LDFLAGS = -lm -lpthread -ldl
 
 SOURCES = $(shell find $(SRC_DIR) -type f -name '*.c')
