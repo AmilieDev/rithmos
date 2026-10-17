@@ -1,0 +1,1 @@
+this is a filler md, i plan on adding support for Spotify and Navidrome in the coming future.
