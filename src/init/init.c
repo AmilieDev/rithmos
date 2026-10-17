@@ -85,20 +85,14 @@ char *get_user_song(void){
 	song_location[i] = '\0';
 
 
+	size_t len = strlen(song_location);
+
 	// Check if the song is a compatible audio type - if it not MP3, WAV or FLAC - reject it.
-	if(strlen(song_location) >= strlen(".wav")){
-		if(strcmp(song_location + strlen(song_location) - strlen(".wav"), ".wav") != 0){
-			if(strlen(song_location) >= strlen(".mp3")){
-				if(strcmp(song_location + strlen(song_location) - strlen(".mp3"), ".mp3") != 0){
-					if(strlen(song_location) >= strlen(".flac")){
-						if(strcmp(song_location + strlen(song_location) - strlen(".flac"), ".flac") != 0){
-							log_panic("Not a valid file extension. Valid file extensions include: .wav, .mp3, .flac");
-							exit(1);
-						}
-					}
-				}
-			}
-		}
+	if((len < 4 || strcmp(song_location + len - 4, ".wav") != 0) &&
+	(len < 4 || strcmp(song_location + len - 4, ".mp3") != 0) &&
+	(len < 5 || strcmp(song_location + len - 5, ".mp3") != 0)){
+		log_panic("Invalid file extension. Valid extensions; .wav, .mp3, .flac");
+		exit(1);
 	}
 
 	return song_location;
