@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include "../logging/logging.h"
+#include "get_song_location.h"
 
 char *get_user_song(void){
 	// Character method created by nbro on StackOverflow, adapted for Rithmos C.
@@ -15,7 +16,7 @@ char *get_user_song(void){
 	// https://stackoverflow.com/questions/8164000/how-to-dynamically-allocate-memory-space-for-a-string-and-get-that-string-from-u
 	char *song_location = NULL;
 	int c;
-	int i = 0, j = 1;
+	size_t i = 0, j = 1;
 
 	printf("[info]: We need to get the song location. Please enter the location of the song on your file system:\n> ");
 
@@ -26,7 +27,7 @@ char *get_user_song(void){
 		song_location = (char*)realloc(song_location, j * sizeof(char));
 
 		// Store the read character, by ponting it to C.
-		song_location[i] = c;
+		song_location[i] = (char)c;
 
 		i++;
 		j++;

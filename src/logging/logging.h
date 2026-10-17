@@ -5,6 +5,8 @@
 #ifndef LOGGING_H
 #define LOGGING_H
 
+// I learnt enums on the fly here lol
+// https://www.geeksforgeeks.org/c/enumeration-enum-c/
 enum LOG_TYPE {
 	INFO,
 	WARNING,

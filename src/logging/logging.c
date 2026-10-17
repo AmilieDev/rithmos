@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+#include "logging.h"
+
 // Definining colours for use in the terminal. We'd like to make it fancy right?
 #define ANSI_COLOUR_RED "\x1b[31m"
 #define ANSI_COLOUR_GREEN "\x1b[32m"
@@ -14,12 +16,6 @@
 
 // I learnt enums on the fly here lol
 // https://www.geeksforgeeks.org/c/enumeration-enum-c/
-enum LOG_TYPE {
-	INFO,
-	WARNING,
-	ERROR,
-	PANIC
-};
 
 void logger(enum LOG_TYPE type, const char *message, ...){
 	// https://en.cppreference.com/c/io/vfprintf
