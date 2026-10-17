@@ -2,7 +2,12 @@
 // AmilieDev; 16/10/2026
 // Created this init file, seperated the basics out from the main.c - couldn't do anything elsewise.
 
-#include <stdio.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Include own headers, this is needed for declarations for the song location.
+#include "init.h"
 
 // We need MiniAudio.h obviously.
 #include "../miniaudio/miniaudio.h"
@@ -21,12 +26,80 @@ int init(void){
                 return -1;
         }
 
-	log_warning("Potential issue: If assets/sound.wav does not exist, the application will not play audio. Please ensure it exists.\nBeing replaced with an audio selector via key input soon anyway. Hopefully will make this GUI one day. Just keep notes.");
-        ma_engine_play_sound(&engine, "assets/sound.wav", NULL);
-	log_info("Sound played! You should have heard a beep!");
-        log_info("Press enter to exit.\n");
-        getchar();
+	// Get the song location from the location function, play it back - and then free it up.
+	char *song_location = get_user_song();
+	log_warning(song_location);
+    ma_engine_play_sound(&engine, song_location, NULL);
+
+	// Check if the audio player (MiniAudio) can actually read the file. If not - why? Then uninit engine, free memory and crash.
+	if(result != MA_SUCCESS){
+		log_error(ma_result_description(result));
+		log_panic("Failed to play the audio file. Please check why!");
+		ma_engine_uninit(&engine);
+		free(song_location);
+		return -1;
+	}else{
+		log_info("Successfully played your song!");
+	}
+
+	free(song_location);
+
+    log_info("Press enter to exit.");
+    getchar();
 
 	// Temporarily terminate the engine here.
 	ma_engine_uninit(&engine);
+	return 0;
+}
+
+char *get_user_song(void){
+	// Character method created by nbro on StackOverflow, adapted for Rithmos C.
+	// 05/06/2016; nbro
+	// https://stackoverflow.com/questions/8164000/how-to-dynamically-allocate-memory-space-for-a-string-and-get-that-string-from-u
+	char *song_location = NULL;
+	int c;
+	int i = 0, j = 1;
+
+	log_info("We need to get the song location. Please enter the location of the song on your file system: ");
+	log_info("Starting to gather string input.");
+
+	// Whilst we aren't looking at a new line, grab from standard keyboard input.
+	while((c = getc(stdin)) != '\n' && c != EOF){
+
+		// Reallocate based on the memory, so that the character can be stored appropriately.
+		song_location = (char*)realloc(song_location, j * sizeof(char));
+
+		// Store the read character, by ponting it to C.
+		song_location[i] = c;
+
+		i++;
+		j++;
+	}
+
+	// Remove trailing spaces, and tabs until the song is actually playable.
+	while(i > 0 && (song_location[i - 1] == ' ' || song_location[i - 1] == '\t')) {
+		i--;
+	}
+
+	// Append a null character at the end of the string to mark the end of it.
+	song_location[i] = '\0';
+
+
+	// Check if the song is a compatible audio type - if it not MP3, WAV or FLAC - reject it.
+	if(strlen(song_location) >= strlen(".wav")){
+		if(strcmp(song_location + strlen(song_location) - strlen(".wav"), ".wav") != 0){
+			if(strlen(song_location) >= strlen(".mp3")){
+				if(strcmp(song_location + strlen(song_location) - strlen(".mp3"), ".mp3") != 0){
+					if(strlen(song_location) >= strlen(".flac")){
+						if(strcmp(song_location + strlen(song_location) - strlen(".flac"), ".flac") != 0){
+							log_panic("Not a valid file extension. Valid file extensions include: .wav, .mp3, .flac");
+							exit(1);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return song_location;
 }
