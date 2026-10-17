@@ -1,4 +1,4 @@
-// MIT No Attribution
+// GPL-V2.0
 // AmilieDev; 16/10/2026
 // Main file for Rithmos. Starts the actual program, and hands off to init.
 

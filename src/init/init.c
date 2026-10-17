@@ -1,4 +1,4 @@
-// MIT No Attribution
+// GPL-V2.0
 // AmilieDev; 16/10/2026
 // Created this init file, seperated the basics out from the main.c - couldn't do anything elsewise.
 
@@ -88,6 +88,11 @@ char *get_user_song(void){
 	size_t len = strlen(song_location);
 
 	// Check if the song is a compatible audio type - if it not MP3, WAV or FLAC - reject it.
+	// Initially created based upon https://stackoverflow.com/questions/744766/how-to-compare-ends-of-strings-in-c
+	// 14/04/2009; Anonymous
+	// No longer based upon this, but worth crediting regardless.
+
+	// TODO; Make this check based on hash, rather than pure string matching.
 	if((len < 4 || strcmp(song_location + len - 4, ".wav") != 0) &&
 	(len < 4 || strcmp(song_location + len - 4, ".mp3") != 0) &&
 	(len < 5 || strcmp(song_location + len - 5, ".mp3") != 0)){

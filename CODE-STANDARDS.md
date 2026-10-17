@@ -9,7 +9,7 @@ All source files, even headers, should have a short header containing the projec
 You should use the following template:
 
 ```
-// MIT No Attribution
+// GPL-V2.0
 // [Author]; [Date]
 // [Short explaination of the file here]
 ```
@@ -17,7 +17,7 @@ You should use the following template:
 If you are making a significant change to a file; instead of replacing the existing author, add yourself on BENEATH them. For example:
 
 ```
-// MIT No Attribution
+// GPL-V2.0
 // AmilieDev; 16/10/2026
 // Contributor1; 20/12/2026
 // Wow. This is a short explaination.

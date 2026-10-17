@@ -1,4 +1,4 @@
-// MIT No Attribution
+// GPL-V2.0
 // AmilieDev; 16/10/2026
 // Header file for Rithmos init system.
 

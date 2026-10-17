@@ -1,4 +1,4 @@
-// MIT No Attribution
+// GPL-V2.0
 // AmilieDev; 16/10/2026
 // Logging system for Rithmos, with appropriate colors. Logs to terminal, not any file.
 
