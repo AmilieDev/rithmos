@@ -19,8 +19,16 @@ char *get_user_song(void){
 	// Whilst we aren't looking at a new line, grab from standard keyboard input.
 	while((c = getc(stdin)) != '\n' && c != EOF){
 
-		// Reallocate based on the memory, so that the character can be stored appropriately.
-		song_location = (char*)realloc(song_location, j * sizeof(char));
+		// Reallocate based on the memory, so that the character can be stored appropriately. This also patches a memory leak!
+		char *temporary = realloc(song_location, (j + 1) * sizeof(char));
+
+		if(temporary == NULL){
+			free(song_location);
+			logger(PANIC, "Failed to allocate song location memory.");
+			exit(EXIT_FAILURE);
+		}
+
+		song_location = temporary;
 
 		// Store the read character, by ponting it to C.
 		song_location[i] = (char)c;
@@ -32,6 +40,12 @@ char *get_user_song(void){
 	// Remove trailing spaces, and tabs until the song is actually playable.
 	while(i > 0 && (song_location[i - 1] == ' ' || song_location[i - 1] == '\t')) {
 		i--;
+	}
+
+	if(i == 0){
+		free(song_location);
+		logger(WARNING, "No song location was provided. You need to provide a song.");
+		return get_user_song();
 	}
 
 	// Append a null character at the end of the string to mark the end of it.
@@ -47,9 +61,9 @@ char *get_user_song(void){
 	// TODO; Make this check based on hash, rather than pure string matching.
 	if((len < 4 || strcmp(song_location + len - 4, ".wav") != 0) &&
 	(len < 4 || strcmp(song_location + len - 4, ".mp3") != 0) &&
-	(len < 5 || strcmp(song_location + len - 5, ".mp3") != 0)){
-		logger(PANIC, "Invalid file extension. Valid extensions; .wav, .mp3, .flac");
-		exit(1);
+	(len < 5 || strcmp(song_location + len - 5, ".flac") != 0)){
+		logger(ERROR, "Invalid file extension. Valid extensions; .wav, .mp3, .flac");
+		return get_user_song();
 	}
 
 	return song_location;

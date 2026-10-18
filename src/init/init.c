@@ -33,14 +33,14 @@ int init(void){
 
 	get_source_type(song_location);
 
-    ma_engine_play_sound(&engine, song_location, NULL);
+    result = ma_engine_play_sound(&engine, song_location, NULL);
 
 	// Check if the audio player (MiniAudio) can actually read the file. If not - why? Then uninit engine, free memory and crash.
 	if(result != MA_SUCCESS){
+		free(song_location);
+		ma_engine_uninit(&engine);
 		logger(ERROR, ma_result_description(result));
 		logger(PANIC, "Failed to play the audio file. Please check why!");
-		ma_engine_uninit(&engine);
-		free(song_location);
 		return -1;
 	}else{
 		logger(INFO, "Successfully played your song!");
