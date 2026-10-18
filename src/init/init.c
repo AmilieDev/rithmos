@@ -10,11 +10,11 @@
 #include "init.h"
 
 // We need MiniAudio.h obviously.
-#include "../miniaudio/miniaudio.h"
+#include "../external/miniaudio/miniaudio.h"
 
 // Include logging for the sake of making sure we can actually output to terminal.
 #include "../logging/logging.h"
-#include "../song_utils/get_song_location.h"
+#include "../song_utils/get_source_type.h"
 
 int init(void){
 	ma_result result;
@@ -30,14 +30,17 @@ int init(void){
 	// Get the song location from the location function, play it back - and then free it up.
 	char *song_location = get_user_song();
 	logger(WARNING, song_location);
-    ma_engine_play_sound(&engine, song_location, NULL);
+
+	get_source_type(song_location);
+
+    result = ma_engine_play_sound(&engine, song_location, NULL);
 
 	// Check if the audio player (MiniAudio) can actually read the file. If not - why? Then uninit engine, free memory and crash.
 	if(result != MA_SUCCESS){
+		free(song_location);
+		ma_engine_uninit(&engine);
 		logger(ERROR, ma_result_description(result));
 		logger(PANIC, "Failed to play the audio file. Please check why!");
-		ma_engine_uninit(&engine);
-		free(song_location);
 		return -1;
 	}else{
 		logger(INFO, "Successfully played your song!");
