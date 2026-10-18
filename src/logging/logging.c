@@ -14,9 +14,6 @@
 #define ANSI_COLOUR_YELLOW "\x1b[33m"
 #define ANSI_COLOUR_RESET "\x1b[0m"
 
-// I learnt enums on the fly here lol
-// https://www.geeksforgeeks.org/c/enumeration-enum-c/
-
 void logger(enum LOG_TYPE type, const char *message, ...){
 	// https://en.cppreference.com/c/io/vfprintf
 	// Look here for documentation on how this works. Make logging more dynamic and lets us put as many types of info as we want.

@@ -1,7 +1,3 @@
-// GPL-V2.0
-// AmilieDev; 16/10/2026
-// Get the song location from the user device, so we can play it appropriately.
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,7 +14,7 @@ char *get_user_song(void){
 	int c;
 	size_t i = 0, j = 1;
 
-	printf("[info]: We need to get the song location. Please enter the location of the song on your file system:\n> ");
+	printf("[info]: We need to get the song location. Please enter the location of the song on your file system, or remotely:\n> ");
 
 	// Whilst we aren't looking at a new line, grab from standard keyboard input.
 	while((c = getc(stdin)) != '\n' && c != EOF){
@@ -40,7 +36,6 @@ char *get_user_song(void){
 
 	// Append a null character at the end of the string to mark the end of it.
 	song_location[i] = '\0';
-
 
 	size_t len = strlen(song_location);
 

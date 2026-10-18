@@ -2,7 +2,7 @@
 CC = gcc
 
 SRC_DIR = ./src
-INC_DIR = $(SRC_DIR)/miniaudio
+INC_DIR = $(SRC_DIR)/external/miniaudio
 OUT_DIR = ./output
 
 # Compiler flags for Rithmos (Be hella strict!)
