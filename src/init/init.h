@@ -7,5 +7,6 @@
 
 int init(void);
 char *get_user_song(void);
+int restart_from_nothing(void);
 
 #endif
