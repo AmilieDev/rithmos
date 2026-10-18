@@ -6,7 +6,7 @@
 #include <string.h>
 
 // Credits @ Mackron on GitHub for MiniAudio - a clean, and efficient sound API.
-#include "miniaudio/miniaudio.h"
+#include "external/miniaudio/miniaudio.h"
 
 // src/init/init.h - Starts the actual MiniAudio engine.
 #include "init/init.h"

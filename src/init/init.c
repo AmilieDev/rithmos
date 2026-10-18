@@ -14,7 +14,7 @@
 
 // Include logging for the sake of making sure we can actually output to terminal.
 #include "../logging/logging.h"
-#include "../song_utils/get_song_location.h"
+#include "../song_utils/get_source_type.h"
 
 int init(void){
 	ma_result result;

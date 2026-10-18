@@ -6,13 +6,13 @@ INC_DIR = $(SRC_DIR)/external/miniaudio
 OUT_DIR = ./output
 
 # Compiler flags for Rithmos (Be hella strict!)
-CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -Wformat=2 -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes -O2 -march=native -fstack-protector-strong -pthread
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -Wformat=2 -Wshadow -Wconversion -Wstrict-prototypes -Wmissing-prototypes -O2 -march=native -fstack-protector-strong -fsanitize=address,undefined -fno-omit-frame-pointer -pthread
 
 # Less strict flags for MiniAudio
 MINIAUDIO_CFLAGS = -std=c11 -O2 -pthread
 
 # Linker configuration
-LDFLAGS = -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -Wl,--as-needed
+LDFLAGS = -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -Wl,--as-needed -fsanitize=address,undefined -lm -pthread -ldl
 
 LDLIBS = -lm -pthread -ldl
 
